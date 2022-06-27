@@ -1,0 +1,85 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace EmployeeManagementSystem
+{
+    internal class Program
+    {
+        static void Main(string[] args)
+        {
+
+            
+
+            if (false)
+            {
+                #region Employee Management System
+
+                Console.WriteLine("Employee Management System ");
+
+                Console.WriteLine();
+                Console.WriteLine();
+
+                Console.Write("Enter the Employee Number : ");
+                int _EmpNo = Convert.ToInt32(Console.ReadLine());
+                //int _EmpNo = 456456;
+
+                Console.Write("Enter the Employee Name : ");
+                string _EmpName = Console.ReadLine();
+                //string _EmpName = "xyz";
+
+                Console.Write("Enter the Employee Salary : ");
+                double _EmpSalary = Convert.ToDouble(Console.ReadLine());
+
+                Console.WriteLine("For Manger : 1");
+                Console.WriteLine("For MarketingExecutive : 2");
+                Console.WriteLine("For Employee : 3");
+
+                Console.Write("Enter the Employee Role : ");
+                int _EmpRoleNO = Convert.ToInt32(Console.ReadLine());
+                string _EmpRole;
+                Console.WriteLine();
+                Employees emp = new Employees();
+
+                if (_EmpRoleNO != 0)
+                {
+                    switch (_EmpRoleNO)
+                    {
+                        case 1:
+                            _EmpRole = "Manager";
+                            emp.CalculateSalary(_EmpNo, _EmpName, _EmpSalary, _EmpRole);
+                            break;
+                        case 2:
+                            _EmpRole = "MarketingExecutive";
+                            Console.Write("Enter the Kilometer travel : ");
+                            int TrlKM = Convert.ToInt32(Console.ReadLine());
+                            emp.CalculateSalary(_EmpNo, _EmpName, _EmpSalary, _EmpRole ,TrlKM);
+                            break;
+                        default:
+                            _EmpRole = "Emp";
+                            break;
+
+                    }
+                }
+
+
+                #endregion
+            }
+            else
+            {
+                #region MYSTACK
+
+                MyStack ms = new MyStack();
+                ms.MyStackmethod();
+
+                #endregion
+            }
+
+
+            Console.ReadKey();
+
+        }
+    }
+}

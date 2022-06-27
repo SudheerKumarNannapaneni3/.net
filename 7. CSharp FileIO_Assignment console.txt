@@ -1,0 +1,262 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+
+
+namespace Entity
+{
+    public class Entity
+    {
+        public class Employee { 
+            private string Name;
+            private string Address;
+            private string City;
+            private string Department;
+            private double Salary;
+
+
+            public void setName(string Name)
+            {
+                this.Name = Name;
+            }
+            public void setAddress(string Address)
+            {
+                this.Address = Address;
+            }
+            public void setCity(string City)
+            {
+                this.City = City;
+            }
+            public void setDepartment(string Department)
+            {
+                this.Department = Department;
+            }
+            public void setSalary(double Salary)
+            {
+                this.Salary = Salary;
+            }
+
+
+            public string getName()
+            {
+                return Name;
+            }
+            public string getAddress()
+            {
+                return Address;
+            }
+            public string getCity()
+            {
+                return City;
+            }
+            public string getDepartment()
+            {
+                return Department;
+            }
+            public double getSalary()
+            {
+                return Salary;
+            }
+          
+        }
+    }
+}
+
+
+
+Task 2: 
+
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+
+
+namespace C_SHARP
+{
+    class Program
+    {
+
+
+        static void Main(string[] args){
+            string Name;
+            string Address;
+            string City;
+            string Department;
+            double Salary;
+            Entity.Entity.Employee employee = new Entity.Entity.Employee();
+            Console.Write("Enter Employee Name: ");
+            Name = Console.ReadLine();
+            Console.Write("Enter Employee Address: ");
+            Address = Console.ReadLine();
+            Console.Write("Enter Employee City: ");
+            City = Console.ReadLine();
+            Console.Write("Enter Employee Department: ");
+            Department = Console.ReadLine();
+            Console.Write("Enter Employee Salary: ");
+            Salary = double.Parse(Console.ReadLine());
+            employee.setName(Name);
+            employee.setAddress(Address);
+            employee.setCity(City);
+            employee.setDepartment(Department);
+            employee.setSalary(Salary);
+
+
+
+
+            Console.WriteLine("\nEmployee Name: {0}", employee.getName());
+            Console.WriteLine("Employee Address: {0}", employee.getAddress());
+            Console.WriteLine("Employee City: {0}", employee.getCity());
+            Console.WriteLine("Employee Department: {0}", employee.getDepartment());
+            Console.WriteLine("Employee Salary: {0}", employee.getSalary().ToString("C"));
+
+
+            Console.ReadLine();
+        }
+    }
+}
+
+
+Task 3:
+
+
+
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+
+
+namespace C_SHARP
+{
+    class Program
+    {
+
+
+        static void Main(string[] args){
+            string Name;
+            string Address;
+            string City;
+            string Department;
+            double Salary;
+            Entity.Entity.Employee[] employees = new Entity.Entity.Employee[10];
+            for (int i = 0; i < 10; i++) {
+                Console.Write("Enter Employee Name: ");
+                Name = Console.ReadLine();
+                Console.Write("Enter Employee Address: ");
+                Address = Console.ReadLine();
+                Console.Write("Enter Employee City: ");
+                City = Console.ReadLine();
+                Console.Write("Enter Employee Department: ");
+                Department = Console.ReadLine();
+                Console.Write("Enter Employee Salary: ");
+                Salary = double.Parse(Console.ReadLine());
+                employees[i] = new Entity.Entity.Employee();
+                employees[i].setName(Name);
+                employees[i].setAddress(Address);
+                employees[i].setCity(City);
+                employees[i].setDepartment(Department);
+                employees[i].setSalary(Salary);
+                Console.WriteLine();
+            }
+
+
+
+
+            for (int i = 0; i < 10; i++)
+            {
+                Console.WriteLine("\nEmployee {0}",(i+1));
+                Console.WriteLine("Employee Name: {0}", employees[i].getName());
+                Console.WriteLine("Employee Address: {0}", employees[i].getAddress());
+                Console.WriteLine("Employee City: {0}", employees[i].getCity());
+                Console.WriteLine("Employee Department: {0}", employees[i].getDepartment());
+                Console.WriteLine("Employee Salary: {0}\n", employees[i].getSalary().ToString("C"));
+            }
+            Console.ReadLine();
+        }
+    }
+}
+
+
+Task 4:
+
+
+
+
+
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+
+
+namespace Entity
+{
+    public class Entity
+    {
+        public class Employee
+        {
+            public string Name { set; get; }
+            public string Address { set; get; }
+            public string City { set; get; }
+            public string Department { set; get; }
+            public double Salary { set; get; }
+
+
+
+
+        }
+    }
+}
+
+
+
+
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+
+
+namespace C_SHARP
+{
+    class Program
+    {
+
+
+        static void Main(string[] args){
+            Entity.Entity.Employee[] employees = new Entity.Entity.Employee[10];
+            for (int i = 0; i < 10; i++) {
+                employees[i] = new Entity.Entity.Employee();
+                Console.Write("Enter Employee Name: ");
+                employees[i].Name = Console.ReadLine();
+                Console.Write("Enter Employee Address: ");
+                employees[i].Address = Console.ReadLine();
+                Console.Write("Enter Employee City: ");
+                employees[i].City = Console.ReadLine();
+                Console.Write("Enter Employee Department: ");
+                employees[i].Department = Console.ReadLine();
+                Console.Write("Enter Employee Salary: ");
+                employees[i].Salary = double.Parse(Console.ReadLine());
+                
+               
+                Console.WriteLine();
+            }
+
+
+
+
+            for (int i = 0; i < 10; i++)
+            {
+                Console.WriteLine("\nEmployee {0}",(i+1));
+                Console.WriteLine("Employee Name: {0}", employees[i].Name);
+                Console.WriteLine("Employee Address: {0}", employees[i].Address);
+                Console.WriteLine("Employee City: {0}", employees[i].City);
+                Console.WriteLine("Employee Department: {0}", employees[i].Department);
+                Console.WriteLine("Employee Salary: {0}\n", employees[i].Salary.ToString("C"));
+            }
+            Console.ReadLine();
+        }
+    }
+}

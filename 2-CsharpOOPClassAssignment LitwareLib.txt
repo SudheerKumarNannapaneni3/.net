@@ -1,0 +1,40 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace LitwareLib
+{
+    public class Program
+    {
+        static void Main(string[] args)
+        {
+
+            Console.WriteLine("Employee Management System ");
+
+            Console.WriteLine();
+            Console.WriteLine();
+
+            //Console.Write("Enter the Employee Number : ");
+            //int _EmpNo = Convert.ToInt32(Console.ReadLine());
+            int _EmpNo = 456456;
+
+            //Console.Write("Enter the Employee Name : ");
+            //string _EmpName = Console.ReadLine();
+            string _EmpName = "xyz";
+
+            Console.Write("Enter the Employee Salary : ");
+            double _EmpSalary = Convert.ToDouble(Console.ReadLine());
+
+            Employee emp = new Employee();
+            
+            emp.CalculateSalary(_EmpNo,_EmpName,_EmpSalary);
+
+
+            Console.ReadKey();
+
+
+        }
+    }
+}

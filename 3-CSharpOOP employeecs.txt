@@ -1,0 +1,118 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace EmployeeManagementSystem
+{
+    interface IPrintable
+    {
+       void CalculateSalary(int EmpNo, string EmpName, double Salary, string role,int km);
+    }
+    internal class Employees : IPrintable
+    {
+        private int EmpNo;
+        private string EmpName;
+        private double Salary;
+        private double HRA;
+        private double TA;
+        private double DA;
+        private double PF;
+        private double TDS;
+        private double NetSalary;
+        private double GrossSalary;
+
+
+
+         double PetrolAllowance;
+         double FoodAllowance;
+         double OtherAllowances;
+
+         int TourAllowances;
+         int TelephoneAllowances;
+
+        public string Employee { get; set; }
+        public string Manager  { get; set; }
+        public string MarketingExecutive  { get; set; }
+
+        public void CalculateSalary(int EmpNo, string EmpName, double Salary, string role , int km = 0)
+        {
+            this.EmpNo = EmpNo;
+            this.EmpName = EmpName;
+            this.Salary = Salary;
+
+            if (Salary < 5000)
+            {
+                this.HRA = Salary * 10 / 100;
+                this.TA = Salary * 5 / 100;
+                this.DA = Salary * 15 / 100;
+
+            }
+            else if (Salary >= 5000 && Salary < 10000)
+            {
+                this.HRA = Salary * 15 / 100;
+                this.TA = Salary * 10 / 100;
+                this.DA = Salary * 20 / 100;
+            }
+            else if (Salary >= 10000 && Salary < 15000)
+            {
+                this.HRA = Salary * 20 / 100;
+                this.TA = Salary * 15 / 100;
+                this.DA = Salary * 25 / 100;
+            }
+            else if (Salary >= 15000 && Salary < 20000)
+            {
+                this.HRA = Salary * 25 / 100;
+                this.TA = Salary * 20 / 100;
+                this.DA = Salary * 30 / 100;
+            }
+            else if (Salary >= 20000)
+            {
+                this.HRA = Salary * 30 / 100;
+                this.TA = Salary * 25 / 100;
+                this.DA = Salary * 35 / 100;
+            }
+
+
+            this.GrossSalary = this.Salary + this.HRA + this.TA + this.DA;
+            this.PF = this.GrossSalary * 10 / 100;
+            this.TDS = this.GrossSalary * 18 / 100;
+            this.GrossSalary = this.GrossSalary - this.PF;
+
+            if (role == "Manager")
+            {
+                PetrolAllowance = Salary * 8 / 100;
+                FoodAllowance = Salary * 13 / 100;
+                OtherAllowances = Salary * 3 / 100;
+
+                this.GrossSalary = this.GrossSalary + PetrolAllowance + FoodAllowance + OtherAllowances;
+
+
+            }
+            else if (role == "MarketingExecutive")
+            {
+                if (km > 0)
+                {
+                    TourAllowances = km * 5;
+                    TelephoneAllowances = 1000;
+
+                    this.GrossSalary = this.GrossSalary + TourAllowances + TelephoneAllowances;
+                }
+            }
+
+
+            this.NetSalary = this.GrossSalary - this.TDS;
+
+            Console.WriteLine();
+
+            Console.WriteLine("Gross Salary : {0}", this.GrossSalary);
+            Console.WriteLine("PF : {0}", this.PF);
+            Console.WriteLine("TDS : {0}", this.TDS);
+            Console.WriteLine("Net Salary : {0}", this.NetSalary);
+
+
+
+        }
+    }
+}

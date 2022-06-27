@@ -1,0 +1,488 @@
+Question 1,2:
+using System;
+namespace LitwareLib
+{
+
+public class Program
+{
+	public delegate void MyPrintDelegate();
+    public static void Main(string[] args)
+    {
+        Employee emp = new Employee();
+        
+        emp.GetEmployeeData();
+        emp.CalculateGrossSalary();
+        emp.CalculateSalary(0,0);
+        //emp.PrintEmployeeDetails(emp);
+        
+        Manager mgr = new Manager();
+		
+        mgr.CalculateSalary(emp.Salary, emp.GrossSalary);
+		Console.WriteLine("Below is Manager Details");
+		emp.PrintEmployeeDetails(emp);
+		MyPrintDelegate del1 = new MyPrintDelegate(mgr.PrintDetails);
+        
+        MarketingExecutive mkExe = new MarketingExecutive();
+        mkExe.CalculateSalary(emp.Salary, emp.GrossSalary);
+		Console.WriteLine("Below is Marketing Executive Details");
+		emp.PrintEmployeeDetails(emp);
+        del1 += mkExe.PrintDetails;
+		del1.Invoke();
+    }
+}
+interface IPrintable 
+{
+    void PrintEmployeeDetails(Employee e);
+}
+    public class Employee : IPrintable
+    {
+    private int empNo;
+    private string empName;
+	private double salary;
+	private double hra;
+	private double ta;
+	private double da;
+	private double pf;
+	private double tds;
+	private double netSalary;
+	private double grossSalary;
+
+    public Employee()
+    {
+    }   
+
+    public int EmpNo
+    {
+	get{return empNo;}
+    set{empNo = value;}
+    }
+    public string EmpName
+    {
+	get{return empName;}
+    set{empName = value;}
+    } 
+    public double Salary
+    {
+	get{return salary;}
+    set{salary = value;}
+    } 
+    public double HRA
+    {
+        get{return hra;}
+        set{hra = value;}
+    }
+    public double TA
+    {
+        get{return ta;}
+        set{ta = value;}
+    }
+    public double DA
+    {
+        get{return da;}
+        set{da = value;}
+    }
+    public double GrossSalary
+    {
+        get{return grossSalary;}
+        set{grossSalary = value;}
+    }
+    public double PF
+    {
+        get{return pf;}
+        set{pf = value;}
+    }
+    public double TDS
+    {
+        get{return tds;}
+        set{tds = value;}
+    }
+    public double NetSalary
+    {
+        get{return netSalary;}
+        set{netSalary = value;}
+    }
+
+    public void PrintEmployeeDetails(Employee emp)
+    {
+        Console.WriteLine("Employee No is: {0}",emp.EmpNo);
+        Console.WriteLine("Employee Name is: {0}",emp.EmpName);
+        Console.WriteLine("Salary is: {0}",emp.Salary);
+        Console.WriteLine("Gross Salary is: {0}",emp.GrossSalary);
+        Console.WriteLine("PF is: {0}",emp.PF);
+        Console.WriteLine("TDS is: {0}",emp.TDS);
+        Console.WriteLine("NetSalary is: {0}",emp.NetSalary);
+    }
+    
+    public void GetEmployeeData()
+    {
+    Console.WriteLine("Enter Employee Number");
+	this.EmpNo = int.Parse(Console.ReadLine());
+	Console.WriteLine("Enter Employee Name");
+	this.EmpName = Console.ReadLine();
+	Console.WriteLine("Enter Employee Salary");
+    this.Salary = double.Parse(Console.ReadLine());
+    }
+    
+    public virtual void CalculateSalary(double salary, double GrossSalary)
+    {
+        try
+        {
+            this.PF = 0.1 * this.GrossSalary;
+            this.TDS = 0.18 * this.GrossSalary;
+            this.NetSalary = this.GrossSalary - (this.PF + this.TDS);
+        }
+        catch(Exception e)
+        {
+            Console.WriteLine("Exception occured: {0}",e);
+        }
+    }
+    
+    public void CalculateGrossSalary()
+    {
+        try
+        {
+            if(this.Salary < 5000)
+            {
+                this.HRA = 0.1 * this.Salary;
+                this.TA = 0.05 * this.Salary;
+                this.DA = 0.15 * this.Salary;
+            }
+            else if(this.Salary < 10000)
+            {
+                this.HRA = 0.15 * this.Salary;
+                this.TA = 0.1 * this.Salary;
+                this.DA = 0.2 * this.Salary;
+            }
+            else if(this.Salary < 15000)
+            {
+                this.HRA = 0.2 * this.Salary;
+                this.TA = 0.15 * this.Salary;
+                this.DA = 0.25 * this.Salary;
+            }
+            else if(this.Salary < 20000)
+            {
+                this.HRA = 0.25 * this.Salary;
+                this.TA = 0.2 * this.Salary;
+                this.DA = 0.3 * this.Salary;
+            }
+            else if(this.Salary >= 20000)
+            {
+                this.HRA = 0.3 * this.Salary;
+                this.TA = 0.25 * this.Salary;
+                this.DA = 0.35 * this.Salary;
+            }
+            else
+            {
+                this.HRA = 0;
+                this.TA = 0;
+                this.DA = 0;
+            }
+            this.GrossSalary = this.Salary + this.HRA + this.DA + this.TA;
+        }
+        catch(Exception e)
+        {
+            Console.WriteLine("Exception occured: {0}",e);
+        }
+    }
+    }
+    
+    public class Manager : Employee
+    {
+        private double petrolAllowance;
+        private double foodAllowance;
+        private double otherAllowance;
+        private double grossSalary;
+        Employee e = new Employee();
+        //e.GrossSalary = 123;
+        
+        public double PetrolAllowance
+        {
+            get{return petrolAllowance;}
+            set{petrolAllowance = value;}
+        }
+        public double FoodAllowance
+        {
+            get{return foodAllowance;}
+            set{foodAllowance = value;}
+        }
+        public double OtherAllowance
+        {
+            get{return otherAllowance;}
+            set{otherAllowance = value;}
+        }
+        public new double GrossSalary
+        {
+            get{return grossSalary;}
+            set{grossSalary = value;}
+        }
+		
+		public void PrintDetails()
+		{
+			Console.WriteLine("GrossSalary of Manager is: {0}",this.GrossSalary);
+		}
+        public override void CalculateSalary(double sal, double grossSalary)
+        {
+            try
+            {
+                this.PetrolAllowance = 0.08 * sal;
+                this.FoodAllowance = 0.13 * sal;
+                this.OtherAllowance = 0.03 * sal;
+                //e.PF = 0.1 * e.GrossSalary;
+                //e.TDS = 0.18 * e.GrossSalary;
+                //e.NetSalary = e.GrossSalary - (e.PF + e.TDS);
+                
+                this.GrossSalary = grossSalary + this.PetrolAllowance + this.FoodAllowance + this.OtherAllowance;
+            }
+catch(Exception e)
+            {
+                Console.WriteLine("Exception occured: {0}",e);
+            }
+        }
+        
+    }
+    
+    public class MarketingExecutive  : Employee
+    {
+        private double kmTravelled;
+        private double tourAllowance;
+        private double telephoneAllowance;
+        private double grossSalary;
+        Employee e = new Employee();
+        //e.GrossSalary = 123;
+        
+        public double KmTravelled
+        {
+            get{return kmTravelled;}
+            set{kmTravelled = value;}
+        }
+        public double TourAllowance
+        {
+            get{return tourAllowance;}
+            set{tourAllowance = value;}
+        }
+        public double TelephoneAllowance
+        {
+            get{return telephoneAllowance;}
+            set{telephoneAllowance = value;}
+        }
+        public new double GrossSalary
+        {
+            get{return grossSalary;}
+            set{grossSalary = value;}
+        }
+		
+		public void PrintDetails()
+		{
+			Console.WriteLine("GrossSalary of Marketing Executive is: {0}",this.GrossSalary);
+		}
+		
+        public override void CalculateSalary(double sal, double grossSalary)
+        {
+            try
+            {
+                this.TourAllowance = 5 * this.KmTravelled;
+                this.TelephoneAllowance = 1000;
+                //e.PF = 0.1 * e.GrossSalary;
+                //e.TDS = 0.18 * e.GrossSalary;
+                //e.NetSalary = e.GrossSalary - (e.PF + e.TDS);
+                
+                this.GrossSalary = grossSalary + this.TourAllowance + this.TelephoneAllowance;
+            }
+            catch(Exception e)
+            {
+                Console.WriteLine("Exception occured: {0}",e);
+            }
+        }
+        
+    }
+}
+Question 4,5:
+using System;
+namespace BankingDomain
+{
+
+public class Program
+{
+    public static void Main(string[] args)
+    {
+		Account account = new Account();
+		Console.WriteLine("Enter Account No");
+		account.accountNo = int.Parse(Console.ReadLine());
+		Console.WriteLine("Enter Customer Name");
+		account.customerName = Console.ReadLine();
+		Console.WriteLine("Select Bank No\n1.ICICI Bank\n2.HDFC Bank");
+		int option = int.Parse(Console.ReadLine());
+		switch(option)
+		{
+			case 1:
+		
+        		ICICIBank icici = new ICICIBank();
+				icici.AccountZero += evnt_AccZero;
+				icici.AccountInSufficient += evnt_AccInSufficient;
+				icici.CheckICICICondition();
+				
+				Console.WriteLine("Enter Amount to Withdraw");
+				account.WithdrawAccount(double.Parse(Console.ReadLine()));
+				Console.WriteLine("Account balance is {0}", account.balance);
+				break;
+		
+				case 2:
+				HDFCBank hdfc = new HDFCBank();
+				hdfc.AccountZero += evnt_AccZero;
+				hdfc.AccountInSufficient += evnt_AccInSufficient;
+				hdfc.AccountWithdrawAlert += evnt_AccWithdrawAlert;
+				hdfc.CheckHDFCCondition();
+	
+				Console.WriteLine("Enter Amount to Withdraw");
+				account.WithdrawAccount(double.Parse(Console.ReadLine()));
+				Console.WriteLine("Account balance is {0}", account.balance);
+				break;
+		}
+    }
+	
+	public static void evnt_AccWithdrawAlert(object sender, EventArgs e)
+    {
+        Console.WriteLine("Transaction cannot be continued below specified limit of	Rs.-1000");
+    }
+	public static void evnt_AccZero(object sender, EventArgs e)
+    {
+        Console.WriteLine("Transaction cannot be continued as balance is zero in Account");
+    }
+	public static void evnt_AccInSufficient(object sender, EventArgs e)
+    {
+        Console.WriteLine("Transaction cannot be continued as balance is insufficient in Account");
+    }
+	
+	public class ICICIBank : Account
+	{
+		public event EventHandler AccountZero;
+		public event EventHandler AccountInSufficient;
+		public void CheckICICICondition()
+		{
+			Account acc = new Account();
+			Console.WriteLine("Enter Amount to Deposit");
+			acc.DepositAccount(double.Parse(Console.ReadLine()));
+			if(acc.balance < 0)
+			{
+				OnAccountZero(EventArgs.Empty);
+			}
+			else if(acc.balance < acc.minBal)
+			{
+				OnAccountInSufficient(EventArgs.Empty);
+			}
+		}		
+		protected virtual void OnAccountZero(EventArgs e)
+    	{
+        	AccountZero.Invoke(this, e);
+    	}
+		protected virtual void OnAccountInSufficient(EventArgs e)
+    	{
+        	AccountInSufficient.Invoke(this, e);
+    	}
+	}
+	
+	public class HDFCBank : Account
+	{
+		public event EventHandler AccountZero;
+		public event EventHandler AccountInSufficient;
+		public event EventHandler AccountWithdrawAlert;
+		public void CheckHDFCCondition()
+		{
+			Account acc = new Account();
+			Console.WriteLine("Enter Amount to Deposit");
+			acc.DepositAccount(double.Parse(Console.ReadLine()));
+			if(acc.balance < 0)
+			{
+				OnAccountZero(EventArgs.Empty);
+			}
+			else if(acc.balance < acc.minBal)
+			{
+				OnAccountInSufficient(EventArgs.Empty);
+			}
+			else if(acc.balance <= 1000)
+			{
+				OnWithdrawAlert(EventArgs.Empty);
+			}
+		}	
+		protected virtual void OnWithdrawAlert(EventArgs e)
+    	{
+        	AccountWithdrawAlert.Invoke(this, e);
+    	}
+		protected virtual void OnAccountZero(EventArgs e)
+    	{
+        	AccountZero.Invoke(this, e);
+    	}
+		protected virtual void OnAccountInSufficient(EventArgs e)
+    	{
+        	AccountInSufficient.Invoke(this, e);
+    	}
+	}
+	
+	public class Account
+	{
+		public int accountNo;
+		public string customerName;
+		public double balance;
+		public int minBal = 500;
+		
+		public void WithdrawAccount(double amountToWithdraw)
+		{
+			try
+			{
+				if(this.balance > 500 && this.balance > amountToWithdraw)
+				{
+					this.balance = this.balance - amountToWithdraw;
+				}
+				else if(this.balance <= 500)
+				{
+					throw new AccountException(string.Format("Account should maintain minimum balance"));
+				}
+				else if(this.balance == 0)
+				{
+					throw new AccountException(string.Format("Account balance should not be zero"));
+				}
+				else if(this.balance == amountToWithdraw)
+				{
+					throw new AccountException(string.Format("Enter lesser amount to withdraw"));
+				}
+				else
+				{
+					throw new AccountException(string.Format("Enter valid amount to withdraw"));
+				}
+			}
+			catch(Exception e)
+			{
+				Console.WriteLine("Execption Occured: {0}", e.Message);
+			}
+		}
+		
+		public void DepositAccount(double amountToDeposit)
+		{
+			try
+			{
+				this.balance = this.balance + amountToDeposit;
+			}
+			catch(Exception e)
+			{
+				Console.WriteLine("Execption Occured: {0}", e.Message);
+			}
+		}
+		
+		public void PrintAccountDetails()
+		{
+			Console.WriteLine("Customer Account No", this.accountNo);
+			Console.WriteLine("Customer Name", this.customerName);
+			Console.WriteLine("Customer Account Balance", this.balance);
+		}
+	}
+}
+	
+public class AccountException : Exception
+    {
+        public AccountException(string message)
+      : base(message)
+        {
+        }
+    }
+
+}

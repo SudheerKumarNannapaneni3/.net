@@ -1,0 +1,88 @@
+using System;
+namespace LitwareLib
+{
+    public class Program
+    {
+    public static void Main(string[] args)
+    {
+        MyStack myStack = new MyStack();
+        myStack.Push(101);
+        myStack.Push(102);
+        myStack.Push(103);
+        myStack.PrintMyStack();
+        Console.WriteLine("Array After one pop operation");
+        myStack.Pop();
+        myStack.PrintMyStack();
+    }
+    }
+    
+    public class MyStack : ICloneable
+    {
+        static readonly int size = 1000;
+        int topPosition;
+        int[] intArray = new int[size];
+        
+        public MyStack()
+        {
+            topPosition = -1;
+        }
+        internal bool Push(int input)
+        {
+            if (topPosition >= size)
+            {
+                throw new StackException(string.Format("MyStack Overflowed"));
+                return false;
+            }
+            else
+            {
+                intArray[++topPosition] = input;
+                return true;
+            }
+        }
+        
+        internal int Pop()
+        {
+            if (topPosition < 0)
+            {
+                throw new StackException(string.Format("MyStack Underflowed"));
+                return 0;
+            }
+            else
+            {
+                int value = intArray[topPosition--];
+                return value;
+            }
+        }
+        
+        internal void PrintMyStack()
+        {
+            if (topPosition < 0)
+            {
+                Console.WriteLine("Stack Underflow");
+                return;
+            }
+            else
+            {
+                Console.WriteLine("Printed Stack is :");
+                for (int i = topPosition
+; i >= 0; i--)
+                {
+                    Console.WriteLine(intArray[i]);
+                }
+            }
+        }
+        
+        public object Clone()
+        {
+            return intArray;
+        }
+    }
+    
+    public class StackException : Exception
+    {
+        public StackException(string message)
+      : base(message)
+        {
+        }
+    }
+} 
